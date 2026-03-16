@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Card = ({name,email,id}) => {
+const Card = ({ name, email, id }) => {
     return (
         <div className='tc bg-light-green dib br3 pa3 ma2 grow bw2 shadow-5'>
-            <img alt="avatar" className = "avatar"  src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${name}&size=200`}/>
+            <img alt="avatar" className="avatar" src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${name}&size=200`}/>
             <div>
                 <h2>{name}</h2>
                 <p>{email}</p>

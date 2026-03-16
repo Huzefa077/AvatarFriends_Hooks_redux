@@ -1,29 +1,24 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { thunk } from 'redux-thunk'; // Named import for newer versions
+import { createLogger } from 'redux-logger';
 import 'tachyons';
 
-import App from './Container/App';  // ← IMPORTANT: Add this!
+import App from './Container/App';
+import { searchAvatars, requestAvatars } from './reducers';
+import './index.css';
 
-import { Provider } from 'react-redux';  // only Provider needed
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import {thunk} from 'redux-thunk';         // ← correct: named import { thunk }
-import { createLogger } from 'redux-logger';
+const logger = createLogger();
+const rootReducer = combineReducers({ searchAvatars, requestAvatars });
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
-import { searchRobots, requestRobots } from './reducers';  // your reducer
+const container = document.getElementById('root');
+const root = createRoot(container);
 
-const logger = createLogger();  // optional - shows nice logs in console
-
-const rootReducer = combineReducers({ searchRobots, requestRobots })
-const store = 
-  createStore(rootReducer, applyMiddleware(thunk, logger))
-
-const root = createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <App />
   </Provider>
 );
-
-reportWebVitals();

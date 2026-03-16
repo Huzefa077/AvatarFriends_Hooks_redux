@@ -5,8 +5,11 @@
     src: local('SEGA LOGO FONT'), url('https://fonts.cdnfonts.com/s/6218/SEGA.woff') format('woff');
 }
 
-h1{
+h1 {
     font-family: 'SEGA LOGO FONT';
-    
+}
 
+/* Ensure the yellow color from your App.js class is defined if needed */
+.yellow {
+    color: #FFDC00;
 }

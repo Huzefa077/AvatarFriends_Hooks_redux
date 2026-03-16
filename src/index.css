@@ -6,11 +6,11 @@ body {
 }
 
 h1 {
-  color: rgb(150, 195, 232);
   font-weight: 200;
   color: #0ccac4;
 }
-.avatar{
+
+.avatar {
   width: 100%;
   max-width: 200px;
   height: auto;
