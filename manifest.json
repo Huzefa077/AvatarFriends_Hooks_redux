@@ -1,10 +1,10 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "AvatarFriends",
+  "name": "Avatar Friends App",
   "icons": [
     {
-      "src": "iconRobo.png",
-      "type": "image/png",
+      "src": "iconAvatar.svg",
+      "type": "image/svg+xml",
       "sizes": "512x512"
     }
   ],
