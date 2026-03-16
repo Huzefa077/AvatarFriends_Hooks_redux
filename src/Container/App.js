@@ -1,45 +1,59 @@
-import React, {Component} from 'react';
+import React, { useEffect } from 'react';  // no need for useState anymore
 import CardList from '../Components/CardList';
 import SearchBox from '../Components/SearchBox';
 import './App.css';
 import Scroll from '../Components/Scroll';
 import ErrorBoundry from '../Components/ErrorBoundry';
 
-class App extends Component {
-    constructor(){
-        super();
-        this.state = {
-            robots: [],
-            searchfield: ''
-        }
-    }
-    componentDidMount(){
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then(users => this.setState({robots: users}));
-    }
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchField, requestRobots } from '../actions';  // action creators
 
-    onSearchChange = (event) =>{
-        this.setState({ searchfield: event.target.value});
-    }
+function App() {
+  const searchField = useSelector(state => state.searchRobots?.searchField || '');
 
-    render(){
-        const{robots, searchfield} = this.state;
-        const filteredRobots = robots.filter(robot =>{
-            return robot.name.toLowerCase().includes(searchfield.toLowerCase())
-        })
-        return !robots.length ? <h1>Loading</h1> : 
-            <div className='tc'>
-                <h1 className='f1'>Robot Friends</h1>
-                <SearchBox searchChange = {this.onSearchChange}/>
-                <Scroll>
-                    <ErrorBoundry>
-                        <CardList robots = {filteredRobots} />
-                    </ErrorBoundry>
-                </Scroll>
-            </div>
+  const robots = useSelector(state => state.requestRobots?.robots || []);
+  const isPending = useSelector(state => state.requestRobots?.isPending || false);
+  const error = useSelector(state => state.requestRobots?.error || '');
 
-        ;
-    }
+  const dispatch = useDispatch();
+
+  // Handler for search input
+  const onSearchChange = (event) => {
+    dispatch(setSearchField(event.target.value));
+  };
+
+  // Fetch robots via Redux Thunk once on mount
+  useEffect(() => {
+    dispatch(requestRobots());  // ← this dispatches pending → fetch → success/failed
+  }, [dispatch]);  // dispatch is stable, runs once
+
+  // Filter using Redux values
+  const filteredRobots = robots.filter((robot) =>
+    robot.name.toLowerCase().includes(searchField.toLowerCase())
+  );
+
+  // Handle loading / error states from Redux
+  if (isPending) {
+    return <h1 className="tc f1">Loading...</h1>;
+  }
+
+  if (error) {
+    return <h1 className="tc f1 red">Error: {error}</h1>;
+  }
+
+  return (
+    <div className="tc">
+      <h1 className="f1 yellow">Avatar - Friends</h1>
+
+      <SearchBox searchChange={onSearchChange} />
+
+      <Scroll>
+        <ErrorBoundry>
+          <CardList robots={filteredRobots} />
+        </ErrorBoundry>
+      </Scroll>
+    </div>
+  );
 }
+
 export default App;
