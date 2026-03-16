@@ -6,7 +6,7 @@ Built with **Create React App**, fetches avatar data from an API, and uses DiceB
 ## Live Demo
 
 🌐 **Check it out here:**
-[https://huzefa077.github.io/avatarFriends_hooks-Redux/](https://huzefa077.github.io/avatarFriends_hooks-Redux/)
+[Avatar Friends]( https://huzefa077.github.io/AvatarFriends_Hooks_redux/)
 
 ## Features
 
